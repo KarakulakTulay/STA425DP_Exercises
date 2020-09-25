@@ -1,6 +1,11 @@
 ---
 title: "Week 1 - Exercise part b"
-output: html_notebook
+output:
+  html_document:
+    toc: true
+    self_contained: true
+  github_document:
+    toc: true
 author: 'Tülay Karakulak'
 date: 'Sep 25, 2020'
 ---
