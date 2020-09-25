@@ -5,10 +5,14 @@ author: 'Tülay Karakulak'
 date: 'Sep 25, 2020'
 ---
 
+```{r}
+knitr::opts_chunk$set(echo=TRUE)
+```
+
 
 ### 1. Samples 100 values from a log-normal distrubiton (say, mu=1, sigma=.25)
 
-```{r}
+```{r, echo=TRUE}
 .mu <- 1
 .sigma <- 0.25
 x <- rlnorm(100, meanlog = .mu, sdlog = .sigma)
@@ -16,19 +20,19 @@ x <- rlnorm(100, meanlog = .mu, sdlog = .sigma)
 
 
 ### 2. Create histogram of the distrubition
-```{r}
+```{r, echo=TRUE}
 hist(x, col='lightblue', main='Distribution of Samples', xlim=c(1,6))
 legend(x='topright',y=c("Distribution of Samples"),lty=1, col='lightblue')
 ```
 
 ### 3. Create histogram of the distrubition on the log scale
 
-```{r}
+```{r, echo=TRUE}
 hist(log(x), col='lightblue', main='Distribution of Samples on log scale', xlim=c(0,2))
 ```
 
 ### 4. Report the mean and variance of sample in line in the text
-```{r}
+```{r, echo=TRUE}
 mean(x)
 var(x)
 ```
