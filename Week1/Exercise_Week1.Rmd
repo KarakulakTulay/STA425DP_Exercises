@@ -1,0 +1,37 @@
+---
+title: "Week 1 - Exercise part b"
+output: html_notebook
+author: 'Tülay Karakulak'
+date: 'Sep 25, 2020'
+---
+
+
+### 1. Samples 100 values from a log-normal distrubiton (say, mu=1, sigma=.25)
+
+```{r}
+.mu <- 1
+.sigma <- 0.25
+x <- rlnorm(100, meanlog = .mu, sdlog = .sigma)
+```
+
+
+### 2. Create histogram of the distrubition
+```{r}
+hist(x, col='lightblue', main='Distribution of Samples', xlim=c(1,6))
+legend(x='topright',y=c("Distribution of Samples"),lty=1, col='lightblue')
+```
+
+### 3. Create histogram of the distrubition on the log scale
+
+```{r}
+hist(log(x), col='lightblue', main='Distribution of Samples on log scale', xlim=c(0,2))
+```
+
+### 4. Report the mean and variance of sample in line in the text
+```{r}
+mean(x)
+var(x)
+```
+
+
+
