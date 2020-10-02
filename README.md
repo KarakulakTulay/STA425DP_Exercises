@@ -1,6 +1,6 @@
 # STA425DP_Exercises
 
-This repository includes exercises of the course STA425DP - Fall semester 2020 - UZH :books: :computer:
+This repository includes exercises of the course Statistical Analysis of High-Throughput Genomic and Transcriptomic Data - Fall semester 2020 - UZH :books: :computer:
 
 ![Image for repository](https://github.com/KarakulakTulay/STA425DP_Exercises/blob/master/wordcloud.png)
 
