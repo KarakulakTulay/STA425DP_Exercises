@@ -1,0 +1,86 @@
+---
+title: "Exercise Week4"
+author: "Tülay Karakulak"
+date: "05 10 2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+## Mapping in practice
+
+Check the online available manuals for the mappers
+
+* bowtie2  
+* STAR  
+
+and answer the questions
+
+* How do these mappers score alignments? 
+
+- The both mappers scores alignment according to similarity between reference and read sequence. The both scores alignment by substracting penalties for difference between read and reference, such as mismatch, gap indels etc. in their local alignment mode and by adding bonus for each match between sequences. Then the highest score is chosen as the best alignment of read to reference.
+
+
+* What reporting options are available?  
+
+- Bowtie2 has three reporting options including "default mode" which searches for multiple alignments and reports the best one among them, "-k mode" which searches for one or more alignments and report each of them and "-a mode" which searches for all alignments and reports all.
+
+- STAR has two reporting options. The first option is reporing the highest score as the best alignment of a read. The second option is for multimapping reads.  All alignments having scores between used-defined range are reported.
+
+
+### References
+[1] [Bowtie](http://bowtie-bio.sourceforge.net/bowtie2/manual.shtml#scores-higher-more-similar)
+[2] [STAR](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3530905/)
+
+## Mapping with R
+
+Use the Rsubread package to map a read file found at http://fgcz-gstore.uzh.ch/public/Yeast_Reads/
+
+
+```{r, eval=FALSE}
+BiocManager::install("Rsubread", update=FALSE)
+BiocManager::install("BSgenome.Scerevisiae.UCSC.sacCer3", update=FALSE)
+# download the a read data file
+dir.create("~/Yeast_example")
+setwd("~/Yeast_example")
+download.file("http://fgcz-gstore.uzh.ch/public/Yeast_Reads/20170313.A-G1_R1-sub.fastq.gz", "G1_R1-sub.fastq.gz")
+```
+
+
+```{r echo=TRUE, message=FALSE}
+library("BSgenome")
+library("BSgenome.Scerevisiae.UCSC.sacCer3")
+library("Rsubread")
+```
+
+Use the commands *export* to export method in the *BSgenome* package to write the genome as a fasta file on the local disk. 
+
+
+```{r echo=TRUE, message=FALSE}
+genome <- BSgenome.Scerevisiae.UCSC.sacCer3
+fasta_file <- file.path(tempdir(), "BSgenome.Scerevisiae.UCSC.sacCer3.fasta")
+export(genome, fasta_file)
+```
+
+Use the commands *buildindex* and *align* of the *Rsubread* package to map the reads. Consult the help pages of the respective functions. Build the index so that at most 2GB of RAM is used. Run the alignment with 4 threads. If you computer has less resources, adapt accordingly.
+
+
+```{r}
+buildindex(basename="my_index",reference=fasta_file)
+align(index="my_index",readfile1="~/Yeast_example/G1_R1-sub.fastq.gz",type="rna",output_file="rsubread.bam",nthreads=4)
+```
+
+
+What is the mapping rate of the reads? How does the mapping rate change if you trim 5 bases of both ends?
+
+  - The rate of the reads is 90.3% 
+  - The rate of the reads increase to 91.5% when trimming is applied via following code:
+
+```{r}
+align(index="my_index",readfile1="~/Yeast_example/G1_R1-sub.fastq.gz",type="rna",output_file="rsubread.bam",nthreads=4, nTrim5 = 5 )
+```
+
+
